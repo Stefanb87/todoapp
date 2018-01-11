@@ -1,20 +1,6 @@
 <form #f="ngForm" class="add-item-wrap">
-  <mat-input-container class="example-full-width">
-    <textarea
-    ngModel
-    #task="ngModel"
-    name="task"
-    type="text"
-    [value]='inputValue'
-    matInput 
-    placeholder="Write new task" 
-    required></textarea>
-    <mat-error *ngIf="task.invalid && task.errors.required">
-      Task field is <strong>required</strong>.
-    </mat-error>
-  </mat-input-container>
-  <button 
-  mat-mini-fab 
-  [disabled]="!task.valid"
-  (click)="addItem(task)"><i class="material-icons">add</i></button>
+  <input [(ngModel)]="taskName" name="taskName" type="text" required>
+  <div *ngIf="!f.valid && f.touched">errorcina</div>
+  <button [disabled]="!f.valid" (click)="addItem(f)">add</button>
 </form>
+

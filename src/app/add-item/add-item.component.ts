@@ -8,19 +8,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddItemComponent implements OnInit {
 
-  inputValue;
+  taskName = '';
+  //errorEnabled = false;
 
   constructor(private itemsService: ItemsService) { }
 
   ngOnInit() {
   }
 
-  addItem(taskDesc) {
-    //this.itemsService.addItem(taskDesc);
-    console.log(taskDesc);
-    this.inputValue = '';
-    taskDesc.control.value = '';
-    //taskDesc.control.status = 'INVALID';
+  addItem(taskForm) {
+    // console.log(taskDesc);
+    this.itemsService.addItem({desc: taskForm.value.taskName, isComplete: false});
+    // console.log(taskDesc);
+    taskForm.resetForm();
+    // this.taskName = '';
   }
 
 }

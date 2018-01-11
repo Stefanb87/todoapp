@@ -9,19 +9,19 @@ import { Subscription } from 'rxjs/Subscription';
 })
 export class ItemComponent implements OnInit, OnDestroy {
 
-  items: string[] = [];
+  items = [];
   serverPollingSubscription: Subscription;
 
   constructor(private itemsService: ItemsService) { }
 
   ngOnInit() {
     this.itemsService.getItems()
-                      .subscribe((items: string[]) => {
+                      .subscribe((items) => {
                         this.items = items;
                       });
 
     this.serverPollingSubscription =  this.itemsService.serverPolling()
-                                      .subscribe((item: string) => {
+                                      .subscribe((item: any) => {
                                         this.items.push(item);
                                       });
   }
