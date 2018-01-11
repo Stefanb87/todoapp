@@ -1,0 +1,13 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'https://fonts.googleapis.com/css?family=Roboto';
+@import 'https://fonts.googleapis.com/icon?family=Material+Icons';
+@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+
+/***** GLOBAL STYLES *****/
+
+* {
+    font-family: 'Roboto', sans-serif;
+
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+}
