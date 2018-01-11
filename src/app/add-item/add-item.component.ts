@@ -9,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 export class AddItemComponent implements OnInit {
 
   taskName = '';
-  //errorEnabled = false;
+  error: boolean;
 
   constructor(private itemsService: ItemsService) { }
 
@@ -17,11 +17,16 @@ export class AddItemComponent implements OnInit {
   }
 
   addItem(taskForm) {
-    // console.log(taskDesc);
-    this.itemsService.addItem({desc: taskForm.value.taskName, isComplete: false});
-    // console.log(taskDesc);
-    taskForm.resetForm();
-    // this.taskName = '';
+      // console.log(taskForm);
+      this.itemsService.addItem({desc: taskForm.value.taskName, isComplete: false});
+
+      if (this.itemsService.errorDuplicate) {
+        this.error = true;
+      } else {
+        this.error = false;
+      }
+
+      taskForm.resetForm();
   }
 
 }

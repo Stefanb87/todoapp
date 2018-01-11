@@ -1,26 +1,42 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
+import { EventEmitter } from 'events';
 
 @Injectable()
 export class ItemsService {
 
-  // items: string[] = ['item 1', 'item2', 'item3'];
+  errorDuplicate: boolean;
+
   items = [];
-  //defaultItems: string[] = ['item 1', 'item2', 'item3'];
+
   defaultItems = [
    {desc: 'item 1', isComplete: true},
    {desc: 'item 2', isComplete: false},
    {desc: 'item 3', isComplete: true}
   ];
 
-  randomNumber: number;
+  randomNumber;
+ 
+  completed = 0;
+  pending = 0;
 
   constructor() {
     this.getItemsFromLocalStorage();
     setInterval(() => { const no = Math.floor((Math.random() * 1000) + 1);
-      this.randomNumber = no; }, 1000);
-   }
+                      this.randomNumber = no; }, 1000);
+    this.countStatus();
+  }
+
+  countStatus() {
+    this.items.forEach(el => {
+      if (el.isComplete === true) {
+        this.completed += 1;
+      } else {
+        this.pending += 1;
+      }
+    });
+  }
 
   getItemsFromLocalStorage(): any {
     const itemsFromLocalStorage = JSON.parse(localStorage.getItem('taskList'));
@@ -42,10 +58,12 @@ export class ItemsService {
           desc: 'item ' + this.randomNumber,
           isComplete: this.randomNumber > 500
         };
-        
         observer.next(item);
         this.addItem(item);
-    }, 6000);
+        this.errorDuplicate = false;
+        localStorage.setItem('taskList', JSON.stringify(this.items)); //dodao jer iz nekog razloga u addItem met nije htelo da setuje
+        this.countStatus();
+      }, 10000);
     });
 
     return addItemObservable;
@@ -62,10 +80,12 @@ export class ItemsService {
   addItem(item): boolean {
     if (this.items.filter(t => t.desc === item.desc).length === 0) {
       this.items.push(item);
-      localStorage.clear();
+      //localStorage.clear();
       localStorage.setItem('taskList', JSON.stringify(this.items));
+      this.countStatus();
       return true;
     } else {
+      this.errorDuplicate = true;
       return false;
     }
   }
@@ -73,9 +93,11 @@ export class ItemsService {
   updateItem(item): boolean {
     this.items.forEach(element => {
       if (element.desc === item.desc) {
-        element.isComplete = item.isComplete;
+        item.isComplete = !item.isComplete;
+        //element.isComplete = item.isComplete;
         localStorage.clear();
         localStorage.setItem('taskList', JSON.stringify(this.items));
+        this.countStatus();
         return true;
       }
     });

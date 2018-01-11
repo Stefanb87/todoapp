@@ -1,6 +1,7 @@
 <form #f="ngForm" class="add-item-wrap">
   <input [(ngModel)]="taskName" name="taskName" type="text" required>
-  <div *ngIf="!f.valid && f.touched">errorcina</div>
-  <button [disabled]="!f.valid" (click)="addItem(f)">add</button>
+  <div *ngIf="!f.valid && f.touched">Task Description field is <strong>required</strong>.</div>
+  <div *ngIf="error">Item <strong>already exists</strong>!</div>
+  <button [disabled]="!f.valid" (click)="addItem(f)">Add</button>
 </form>
 

@@ -1,6 +1,6 @@
 <div class="item-wrap" *ngFor="let item of items">
   <p>{{ item.desc }}</p>
   <div class="completion">
-    <mat-checkbox [checked]="item.isComplete"></mat-checkbox>
+    <mat-checkbox (click)="updateCB(item);" [checked]="item.isComplete"></mat-checkbox>
   </div>
 </div>

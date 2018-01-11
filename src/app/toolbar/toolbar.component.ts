@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ItemsService } from '../services/items.service';
 
 @Component({
   selector: 'app-toolbar',
@@ -7,7 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ToolbarComponent implements OnInit {
 
-  constructor() { }
+  pending = this.itemsService.pending;
+  completed = this.itemsService.completed;
+
+  constructor(private itemsService: ItemsService) { }
 
   ngOnInit() {
   }
