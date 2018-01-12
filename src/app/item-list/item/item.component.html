@@ -5,7 +5,7 @@
     <mat-icon matListIcon>assignment</mat-icon>
     <div class="desc-wrap">{{ item.desc | shorten }}</div>
     <div class="completion">
-      <mat-checkbox (click)="updateCB(item);" [checked]="item.isComplete"></mat-checkbox>
+      <input id="cb" type="checkbox" (click)="updateCB(item);" [checked]="item.isComplete">
     </div>
     <mat-divider></mat-divider>
   </mat-list-item>

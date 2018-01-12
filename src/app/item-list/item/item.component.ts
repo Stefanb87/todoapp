@@ -11,7 +11,6 @@ export class ItemComponent implements OnInit, OnDestroy {
 
   items = [];
   serverPollingSubscription: Subscription;
-  CB: boolean;
 
   constructor(private itemsService: ItemsService) { }
 
@@ -29,9 +28,7 @@ export class ItemComponent implements OnInit, OnDestroy {
   }
 
   updateCB(item) {
-    if (item) {
       this.itemsService.updateItem(item);
-    }
   }
 
   ngOnDestroy() {

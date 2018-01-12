@@ -48,8 +48,7 @@ export class ItemsService {
     const completedObservable = Observable.create((observer: Observer<number>) => {
       setInterval(() => {
         observer.next(this.completed);
-        console.log(this.completed);
-      }, 1000);
+      }, 500);
     });
 
     return completedObservable;
@@ -59,8 +58,7 @@ export class ItemsService {
     const pendingObservable = Observable.create((observer: Observer<number>) => {
       setInterval(() => {
         observer.next(this.pending);
-        console.log(this.pending);
-      }, 1000);
+      }, 500);
     });
 
     return pendingObservable;
@@ -121,8 +119,7 @@ export class ItemsService {
   updateItem(item): boolean {
     this.items.forEach(element => {
       if (element.desc === item.desc) {
-        item.isComplete = !item.isComplete;
-        //element.isComplete = item.isComplete;
+        element.isComplete = !item.isComplete;
         localStorage.clear();
         localStorage.setItem('taskList', JSON.stringify(this.items));
         this.countStatus();

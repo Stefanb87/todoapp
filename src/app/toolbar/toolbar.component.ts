@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ItemsService } from '../services/items.service';
 
 @Component({
@@ -6,7 +6,7 @@ import { ItemsService } from '../services/items.service';
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.css']
 })
-export class ToolbarComponent implements OnInit {
+export class ToolbarComponent implements OnInit, OnDestroy {
 
   // pending = this.itemsService.pending;
   // completed = this.itemsService.completed;
@@ -14,18 +14,24 @@ export class ToolbarComponent implements OnInit {
   pending;
   completed;
 
+  pendingUnsubscribe;
+  completedUnsubscribe;
+
   constructor(private itemsService: ItemsService) { }
 
   ngOnInit() {
-    this.itemsService.emitStatusNumberCompleted().subscribe((number: number) => {
+    this.completedUnsubscribe =  this.itemsService.emitStatusNumberCompleted().subscribe((number: number) => {
       this.completed = number;
-      // console.log(this.completed);
     });
 
-    this.itemsService.emitStatusNumberPending().subscribe((number: number) => {
+    this.pendingUnsubscribe = this.itemsService.emitStatusNumberPending().subscribe((number: number) => {
       this.pending = number;
-      // console.log(this.pending);
     });
+  }
+
+  ngOnDestroy() {
+    this.pendingUnsubscribe.unsubscribe();
+    this.completedUnsubscribe.unsubscribe();
   }
 
 }
