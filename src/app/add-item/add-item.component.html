@@ -1,7 +1,9 @@
 <form #f="ngForm" class="add-item-wrap">
-  <input [(ngModel)]="taskName" name="taskName" type="text" required>
-  <div *ngIf="!f.valid && f.touched">Task Description field is <strong>required</strong>.</div>
-  <div *ngIf="error">Item <strong>already exists</strong>!</div>
-  <button [disabled]="!f.valid" (click)="addItem(f)">Add</button>
+  <mat-form-field>
+    <textarea matTextareaAutosize [(ngModel)]="taskName" name="taskName" type="text" required matInput placeholder="Add new task"></textarea>
+  </mat-form-field>
+  
+  <div #errorRequired class="errorContainer" *ngIf="!f.valid && f.touched">Task Description field is <strong>required</strong>.</div>
+  <div class="errorExistsContainer" *ngIf="error && !f.valid">Item <strong>already exists</strong>!</div>
+  <button mat-mini-fab [disabled]="!f.valid" (click)="addItem(f)"><mat-icon>add</mat-icon></button>
 </form>
-

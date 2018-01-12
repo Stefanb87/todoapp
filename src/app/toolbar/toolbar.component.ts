@@ -8,12 +8,24 @@ import { ItemsService } from '../services/items.service';
 })
 export class ToolbarComponent implements OnInit {
 
-  pending = this.itemsService.pending;
-  completed = this.itemsService.completed;
+  // pending = this.itemsService.pending;
+  // completed = this.itemsService.completed;
+
+  pending;
+  completed;
 
   constructor(private itemsService: ItemsService) { }
 
   ngOnInit() {
+    this.itemsService.emitStatusNumberCompleted().subscribe((number: number) => {
+      this.completed = number;
+      // console.log(this.completed);
+    });
+
+    this.itemsService.emitStatusNumberPending().subscribe((number: number) => {
+      this.pending = number;
+      // console.log(this.pending);
+    });
   }
 
 }

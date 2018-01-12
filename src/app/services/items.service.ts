@@ -29,13 +29,41 @@ export class ItemsService {
   }
 
   countStatus() {
+    this.completed = 0;
+    this.pending = 0;
     this.items.forEach(el => {
       if (el.isComplete === true) {
         this.completed += 1;
+        this.emitStatusNumberCompleted();
+        this.emitStatusNumberPending();
       } else {
         this.pending += 1;
+        this.emitStatusNumberCompleted();
+        this.emitStatusNumberPending();
       }
     });
+  }
+
+  emitStatusNumberCompleted() {
+    const completedObservable = Observable.create((observer: Observer<number>) => {
+      setInterval(() => {
+        observer.next(this.completed);
+        console.log(this.completed);
+      }, 1000);
+    });
+
+    return completedObservable;
+  }
+
+  emitStatusNumberPending() {
+    const pendingObservable = Observable.create((observer: Observer<number>) => {
+      setInterval(() => {
+        observer.next(this.pending);
+        console.log(this.pending);
+      }, 1000);
+    });
+
+    return pendingObservable;
   }
 
   getItemsFromLocalStorage(): any {
@@ -63,7 +91,7 @@ export class ItemsService {
         this.errorDuplicate = false;
         localStorage.setItem('taskList', JSON.stringify(this.items)); //dodao jer iz nekog razloga u addItem met nije htelo da setuje
         this.countStatus();
-      }, 10000);
+      }, 100000);
     });
 
     return addItemObservable;

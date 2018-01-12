@@ -1,7 +1,6 @@
 import { ItemsService } from './../../services/items.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
-import {  } from '@angular/core/src/metadata/lifecycle_hooks';
 
 @Component({
   selector: 'app-item',

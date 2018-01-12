@@ -1,6 +1,13 @@
-<div class="item-wrap" *ngFor="let item of items">
-  <p>{{ item.desc }}</p>
-  <div class="completion">
-    <mat-checkbox (click)="updateCB(item);" [checked]="item.isComplete"></mat-checkbox>
-  </div>
-</div>
+<mat-list role="list">
+  <span id="spanTask">Task</span>
+  <span id="spanCompleted">Completed</span>
+  <mat-list-item role="listitem" *ngFor="let item of items">
+    <mat-icon matListIcon>assignment</mat-icon>
+    <div class="desc-wrap">{{ item.desc | shorten }}</div>
+    <div class="completion">
+      <mat-checkbox (click)="updateCB(item);" [checked]="item.isComplete"></mat-checkbox>
+    </div>
+    <mat-divider></mat-divider>
+  </mat-list-item>
+</mat-list>
+

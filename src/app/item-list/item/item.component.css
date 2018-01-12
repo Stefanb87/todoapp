@@ -1,0 +1,33 @@
+mat-list {
+    max-width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+}
+
+#spanTask {
+    padding-left: 20px;
+    font-weight: bold;
+}
+
+#spanCompleted {
+    float: right;
+    font-weight: bold;
+}
+
+mat-list-item {
+    margin-top: 10px;
+}
+
+.desc-wrap {
+    width: 80%;
+}
+
+.completion {
+    width: 20%;
+}
+
+mat-checkbox {
+    float: right;
+    margin-right: 10px;
+}
