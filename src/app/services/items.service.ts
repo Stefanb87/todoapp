@@ -17,20 +17,23 @@ export class ItemsService {
   ];
 
   randomNumber;
- 
   completed = 0;
   pending = 0;
 
   constructor() {
     this.getItemsFromLocalStorage();
+
     setInterval(() => { const no = Math.floor((Math.random() * 1000) + 1);
                       this.randomNumber = no; }, 1000);
+
     this.countStatus();
   }
 
+// method for counting statuses of items (completed/pending)
   countStatus() {
     this.completed = 0;
     this.pending = 0;
+
     this.items.forEach(el => {
       if (el.isComplete === true) {
         this.completed += 1;
@@ -44,6 +47,7 @@ export class ItemsService {
     });
   }
 
+// method for emiting number of completed items
   emitStatusNumberCompleted() {
     const completedObservable = Observable.create((observer: Observer<number>) => {
       setInterval(() => {
@@ -54,6 +58,7 @@ export class ItemsService {
     return completedObservable;
   }
 
+  // method for emiting number of pending items
   emitStatusNumberPending() {
     const pendingObservable = Observable.create((observer: Observer<number>) => {
       setInterval(() => {
@@ -64,6 +69,7 @@ export class ItemsService {
     return pendingObservable;
   }
 
+// method for getting items from local storage
   getItemsFromLocalStorage(): any {
     const itemsFromLocalStorage = JSON.parse(localStorage.getItem('taskList'));
     if (!itemsFromLocalStorage) {
@@ -76,7 +82,7 @@ export class ItemsService {
     return this.items;
   }
 
-
+// method for simulating server polling functionality
   serverPolling() {
     const addItemObservable = Observable.create((observer: Observer<object>) => {
       setInterval(() => {
@@ -93,9 +99,9 @@ export class ItemsService {
     });
 
     return addItemObservable;
-
   }
 
+// method for emitting items (with observable)
   getItems() {
     const myObservable = Observable.create((observer: Observer<object[]>) => {
       observer.next(this.items);
@@ -103,10 +109,10 @@ export class ItemsService {
     return myObservable;
   }
 
+// method for adding new items and error checking
   addItem(item): boolean {
     if (this.items.filter(t => t.desc === item.desc).length === 0) {
       this.items.push(item);
-      //localStorage.clear();
       localStorage.setItem('taskList', JSON.stringify(this.items));
       this.countStatus();
       return true;
@@ -116,6 +122,7 @@ export class ItemsService {
     }
   }
 
+// method for updating item status
   updateItem(item): boolean {
     this.items.forEach(element => {
       if (element.desc === item.desc) {
