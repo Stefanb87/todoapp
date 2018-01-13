@@ -29,5 +29,21 @@ button {
     color: red;
     background-color: rgba(255, 0, 0, 0.1);
     padding: 10px 10px;
-    width: 70%;
+    width: 80%;
+}
+
+@media screen and (max-width: 500px) {
+    form {
+        width: 85%;
+    }
+
+    .errorContainer, .errorExistsContainer {
+        width: 80%;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .errorContainer, .errorExistsContainer {
+        font-size: 11px;
+    }
 }
